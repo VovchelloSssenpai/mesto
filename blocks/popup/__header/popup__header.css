@@ -1,0 +1,17 @@
+.popup__header {
+  margin: 34px 0 54px 0;
+  z-index: 1;
+  font-weight: 900;
+  font-size: 24px;
+  line-height: calc(29 / 24);
+  width: 360px;
+}
+
+@media (max-width: 641px) {
+  .popup__header {
+    margin: 25px 0 75px 0;
+    font-size: 18px;
+    line-height: calc(22 / 18);
+    width: 238px;
+  }
+} ;

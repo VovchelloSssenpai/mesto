@@ -20,19 +20,85 @@
             <section class="profile">
                 <img src="./images/profile-image.jpg" alt="Профильная фотография" class="profile__avatar">
                 <div class="profile__info">
-                    <p class="profile__user-name">Жак-Ив Кусто
+                    <h1 class="profile__user-name">Жак-Ив Кусто
                         <button class="profile__edit-button">
-                            <img src="./images/edit-Button.svg" alt="Кнопка редактирования профиля"
-                                class="profile__edit-logo">
                         </button>
-                    </p>
+                    </h1>
                     <p class="profile__user-profession">Исследователь океана</p>
                 </div>
-                <img src="./images/plus.svg" alt="Кнопка добавления" class="profile__add-button">
+                <!-- <a href=""><img src="./images/plus.svg" alt="Кнопка добавления" class="profile__add-button"></a> -->
+                <button class="profile__add-button"></button>
+
+            </section>
+            <section class="elements">
+                <ul class="elements__list">
+                    <li class="elements__list-item">
+                        <img src="./images/karachayevsk.jpg" alt="Церковь в горах" class="elements__image">
+                        <div class="elements__content">
+                            <p class="elements__text">Карачаевск</p>
+                            <button class="elements__like"></button>
+                        </div>
+
+                    </li>
+                    <li class="elements__list-item">
+                        <img src="./images/goraElbrus.jpg" alt="Фото природы" class="elements__image">
+                        <div class="elements__content">
+                            <p class="elements__text">Гора Эльбрус</p>
+                            <button class="elements__like"></button>
+                        </div>
+
+                    </li>
+                    <li class="elements__list-item">
+                        <img src="./images/dombay.jpg" alt="Горы" class="elements__image">
+                        <div class="elements__content">
+                            <p class="elements__text">Домбай</p>
+                            <button class="elements__like"></button>
+                        </div>
+
+                    </li>
+                    <li class="elements__list-item">
+                        <img src="./images/goraElbrus.jpg" alt="Пейзаж природы" class="elements__image">
+                        <div class="elements__content">
+                            <p class="elements__text">Гора Эльбрус</p>
+                            <button class="elements__like"></button>
+                        </div>
+
+                    </li>
+                    <li class="elements__list-item">
+                        <img src="./images/dombay.jpg" alt="Горы" class="elements__image">
+                        <div class="elements__content">
+                            <p class="elements__text">Домбай</p>
+                            <button class="elements__like"></button>
+                        </div>
+
+                    </li>
+                    <li class="elements__list-item">
+                        <img src="./images/karachayevsk.jpg" alt="Церковь в горах" class="elements__image">
+                        <div class="elements__content">
+                            <p class="elements__text">Карачаево-Черкесия</p>
+                            <button class="elements__like"></button>
+                        </div>
+
+                    </li>
+                </ul>
             </section>
         </div>
-        <div class="footer"></div>
+        <div class="footer">
+            <p class="footer__copyright">© 2020 Mesto Russia</p>
+        </div>
+        <div class="popup">
+            <div class="popup__body">
+                <h2 class="popup__header">Редактировать профиль</h2>
+                <form action="submit" class="popup__form">
+                    <input type="text" class="popup__name-input">
+                    <input type="text" class="popup__profession-input">
+                    <button type="submit" class="popup__submit-button">Сохранить</button>
+                </form>
+                <button class="popup__close-button"></button>
+            </div>
+        </div>
     </div>
+    <script src="./scripts/index.js"></script>
 </body>
 
 </html>

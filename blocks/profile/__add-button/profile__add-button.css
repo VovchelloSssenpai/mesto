@@ -1,14 +1,25 @@
+/* ADD BUTTON VERSION 2 */
 .profile__add-button {
-  max-height: 50px;
-  margin-left: auto;
+  background-image: url(../../../images/addButtonSmall.svg);
+  background-color: black;
+  cursor: pointer;
+  padding: 29px 76px 17px 70px;
   border: 2px solid #ffffff;
-  border-radius: 2px;
-  padding: 12px 62px;
+  margin-left: auto;
+  background-repeat: no-repeat;
+  background-position: center;
+  transition: opacity 0.5s;
 }
 
-@media (max-width: 641px) {
+.profile__add-button:hover {
+  opacity: 0.6;
+}
+
+@media (max-width: 940px) {
   .profile__add-button {
-    padding: 17px 132px;
-    margin: 0;
+    margin: 34px 0 0 0;
+    padding: 29px 207px 17px 70px;
+    object-fit: cover;
+    background-image: url(../../../images/addButtonBig.svg);
   }
 }

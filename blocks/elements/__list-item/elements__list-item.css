@@ -1,0 +1,7 @@
+.elements__list-item {
+  max-width: 282px;
+  max-height: 361px;
+  background-color: white;
+  border-radius: 11px;
+  overflow: hidden;
+}
