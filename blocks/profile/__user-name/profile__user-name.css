@@ -2,10 +2,11 @@
   font-weight: 500;
   font-size: 42px;
   line-height: 1.14;
-  margin: 0 0 8px 0;
+  margin: 0;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+  min-width: 189px;
   width: 100%;
 }
 
@@ -13,8 +14,6 @@
   .profile__user-name {
     font-size: 27px;
     line-height: 1.14;
-    margin: 28px 0 8px 0;
     text-align: center;
-    overflow: visible;
   }
 }

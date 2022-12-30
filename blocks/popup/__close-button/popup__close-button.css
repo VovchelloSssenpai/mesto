@@ -9,9 +9,9 @@
   cursor: pointer;
   width: 32px;
   height: 32px;
-  object-fit: contain;
   padding: 0;
   border: none;
+  background-size: contain;
 }
 
 .popup__close-button:hover {
@@ -21,6 +21,7 @@
 @media (max-width: 641px) {
   .popup__close-button {
     width: 20px;
+    height: 20px;
     right: 0;
     top: -36px;
   }

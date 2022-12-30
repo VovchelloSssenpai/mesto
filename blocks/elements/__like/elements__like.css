@@ -2,7 +2,7 @@
   margin-left: auto;
   margin-right: 20px;
   background-image: url(../../../images/heart.svg);
-  background-color: white;
+  background-color: transparent;
   border: none;
   width: 22px;
   height: 19px;
@@ -12,5 +12,5 @@
 }
 
 .elements__like:hover {
-  opacity: 0.6;
+  opacity: 0.5;
 }

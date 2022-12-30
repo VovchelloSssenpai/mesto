@@ -7,8 +7,10 @@ const profileUsername = document.querySelector(".profile__user-name");
 const profileUserprofession = document.querySelector(
   ".profile__user-profession"
 );
-const popupNameInput = document.querySelector(".popup__name-input");
-const popupProfessionInput = document.querySelector(".popup__profession-input");
+const popupNameInput = document.querySelector(".popup__item_el_name");
+const popupProfessionInput = document.querySelector(
+  ".popup__item_el_profession"
+);
 const popupSubmitButton = document.querySelector(".popup__submit-button");
 const submitForm = document.querySelector(".popup__form");
 
@@ -27,7 +29,6 @@ editButton.addEventListener("click", () => {
   popupOpen();
   popupNameInput.value = profileUsername.textContent;
   popupProfessionInput.value = profileUserprofession.textContent;
-  console.log(profileUserprofession.textContent);
 });
 
 closeButton.addEventListener("click", popupClose);
