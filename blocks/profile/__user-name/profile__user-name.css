@@ -6,14 +6,18 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-  min-width: 189px;
+  max-width: 294px;
   width: 100%;
+}
+
+@media (max-width: 940px) {
+  .profile__user-name {
+    text-align: center;
+  }
 }
 
 @media (max-width: 641px) {
   .profile__user-name {
     font-size: 27px;
-    line-height: 1.14;
-    text-align: center;
   }
 }
