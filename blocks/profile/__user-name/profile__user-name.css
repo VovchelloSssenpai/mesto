@@ -13,11 +13,7 @@
 @media (max-width: 940px) {
   .profile__user-name {
     text-align: center;
-  }
-}
-
-@media (max-width: 641px) {
-  .profile__user-name {
+    max-width: 189px;
     font-size: 27px;
   }
 }

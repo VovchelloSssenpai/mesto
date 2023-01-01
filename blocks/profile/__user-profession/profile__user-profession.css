@@ -13,11 +13,7 @@
 @media (max-width: 940px) {
   .profile__user-profession {
     text-align: center;
-  }
-}
-
-@media (max-width: 641px) {
-  .profile__user-profession {
+    max-width: 282px;
     font-size: 14px;
     line-height: 1.14;
     margin: 9px 0 0 0;
