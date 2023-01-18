@@ -33,72 +33,53 @@
             </section>
             <section class="elements">
                 <ul class="elements__list">
-                    <li class="elements__list-item">
-                        <img src="./images/karachayevsk.jpg" alt="Церковь в горах" class="elements__image">
-                        <div class="elements__content">
-                            <h2 class="elements__text">Карачаевск</h2>
-                            <button class="elements__like" type="button"></button>
-                        </div>
-
-                    </li>
-                    <li class="elements__list-item">
-                        <img src="./images/goraElbrus.jpg" alt="Фото природы" class="elements__image">
-                        <div class="elements__content">
-                            <h2 class="elements__text">Гора Эльбрус</h2>
-                            <button class="elements__like" type="button"></button>
-                        </div>
-
-                    </li>
-                    <li class="elements__list-item">
-                        <img src="./images/dombay.jpg" alt="Горы" class="elements__image">
-                        <div class="elements__content">
-                            <h2 class="elements__text">Домбай</h2>
-                            <button class="elements__like" type="button"></button>
-                        </div>
-
-                    </li>
-                    <li class="elements__list-item">
-                        <img src="./images/goraElbrus.jpg" alt="Пейзаж природы" class="elements__image">
-                        <div class="elements__content">
-                            <h2 class="elements__text">Гора Эльбрус</h2>
-                            <button class="elements__like" type="button"></button>
-                        </div>
-
-                    </li>
-                    <li class="elements__list-item">
-                        <img src="./images/dombay.jpg" alt="Горы" class="elements__image">
-                        <div class="elements__content">
-                            <h2 class="elements__text">Домбай</h2>
-                            <button class="elements__like" type="button"></button>
-                        </div>
-
-                    </li>
-                    <li class="elements__list-item">
-                        <img src="./images/karachayevsk.jpg" alt="Церковь в горах" class="elements__image">
-                        <div class="elements__content">
-                            <h2 class="elements__text">Карачаево-Черкесия</h2>
-                            <button class="elements__like" type="button"></button>
-                        </div>
-
-                    </li>
                 </ul>
             </section>
         </main>
         <footer class="footer">
             <p class="footer__copyright">© 2020 Mesto Russia</p>
         </footer>
-        <div class="popup">
+        <div class="popup popup_edit">
             <div class="popup__body">
                 <h2 class="popup__header">Редактировать профиль</h2>
-                <form action="submit" class="popup__form" name="userForm">
+                <form action="submit" class="popup__form popup__form-profile" name="userForm">
                     <input type="text" class="popup__item popup__item_el_name" name="name">
                     <input type="text" class="popup__item popup__item_el_profession" name="profession">
-                    <button type="submit" class="popup__submit-button">Сохранить</button>
+                    <button type="submit" class="popup__submit-button popup__submit-button_profile">Сохранить</button>
                 </form>
                 <button class="popup__close-button" type="button"></button>
             </div>
         </div>
+        <div class="popup popup_add">
+            <div class="popup__body">
+                <h2 class="popup__header">Новое место</h2>
+                <form action="submit" class="popup__form popup__form-image" name="pictureForm">
+                    <input type="text" class="popup__item popup__item_el_picture" name="picture" placeholder="Название">
+                    <input type="text" class="popup__item popup__item_el_link" name="link"
+                        placeholder="Ссылка на картинку">
+                    <button type="submit" class="popup__submit-button popup__submit-button_image">Создать</button>
+                </form>
+                <button class="popup__close-button" type="button"></button>
+            </div>
+        </div>
+        <div class="popup popup-image">
+            <div class="popup-image__body">
+                <img src="" alt="" class="popup-image__image">
+                <p class="popup-image__text"></p>
+                <button class="popup__close-button" type="button"></button>
+            </div>
+        </div>
     </div>
+    <template id="card">
+        <li class="elements__list-item">
+            <img src="" alt="Церковь в горах" class="elements__image">
+            <button class="element__delete" type="button"></button>
+            <div class="elements__content">
+                <h2 class="elements__text"></h2>
+                <button class="elements__like" type="button"></button>
+            </div>
+        </li>
+    </template>
     <script src="./scripts/index.js"></script>
 </body>
 

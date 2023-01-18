@@ -1,4 +1,5 @@
 .popup__item {
+  max-width: 358px;
   width: 100%;
   border: none;
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
@@ -7,6 +8,9 @@
   font-size: 14px;
   line-height: calc(17 / 14);
   padding-bottom: 8px;
+  /* overflow */
+  /* white-space: nowrap;
+  overflow: hidden; */
 }
 
 .popup__item:last-of-type {
