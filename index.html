@@ -43,8 +43,8 @@
             <div class="popup__body">
                 <h2 class="popup__header">Редактировать профиль</h2>
                 <form action="submit" class="popup__form popup__form-profile" name="userForm">
-                    <input type="text" class="popup__item popup__item_el_name" name="name">
-                    <input type="text" class="popup__item popup__item_el_profession" name="profession">
+                    <input type="text" class="popup__item popup__item_el_name" name="name" placeholder="#">
+                    <input type="text" class="popup__item popup__item_el_profession" name="profession" placeholder="#">
                     <button type="submit" class="popup__submit-button popup__submit-button_profile">Сохранить</button>
                 </form>
                 <button class="popup__close-button" type="button"></button>
@@ -53,7 +53,7 @@
         <div class="popup popup_add">
             <div class="popup__body">
                 <h2 class="popup__header">Новое место</h2>
-                <form action="submit" class="popup__form popup__form-image" name="pictureForm">
+                <form action="submit" class="popup__form popup__form-image" name="pictureForm" id="add-form">
                     <input type="text" class="popup__item popup__item_el_picture" name="picture" placeholder="Название">
                     <input type="text" class="popup__item popup__item_el_link" name="link"
                         placeholder="Ссылка на картинку">
@@ -80,7 +80,7 @@
             </div>
         </li>
     </template>
-    <script src="./scripts/index.js"></script>
+    <script src="./scripts/index.js" type="module"></script>
 </body>
 
 </html>

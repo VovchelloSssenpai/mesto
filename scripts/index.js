@@ -28,124 +28,101 @@ const list = document.querySelector(".elements__list");
 const addButton = document.querySelector(".profile__add-button");
 const popupImage = document.querySelector(".popup-image");
 const popupImageImage = document.querySelector(".popup-image__image");
-let popupImageText = document.querySelector(".popup-image__text");
-
-// Card template
 const listItemTemplate = document.querySelector("#card").content;
+let popupImageText = document.querySelector(".popup-image__text");
+const deleteButtons = document.querySelectorAll(".element__delete");
+const image = document.querySelectorAll(".elements__image");
+const pictureForm = document.getElementById("add-form");
+import { initialCards } from "../modules/cards.js";
 
-// Data
+/////////////////////////////////////////////////////////////////////////////////////////////
+// FUNCTIONs
 
-const initialCards = [
-  {
-    name: "Архыз",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg",
-  },
-  {
-    name: "Челябинская область",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg",
-  },
-  {
-    name: "Иваново",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg",
-  },
-  {
-    name: "Камчатка",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg",
-  },
-  {
-    name: "Холмогорский район",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg",
-  },
-  {
-    name: "Байкал",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg",
-  },
-];
-///////////////////////////////////////////////////////////////////////////////
-// Functions
-// Adding Images
-
-function addCardElement(data) {
-  initialCards.forEach(function (element, index, array) {
-    const listElement = listItemTemplate
-      .querySelector(".elements__list-item")
-      .cloneNode(true);
-    const listImage = listElement.querySelector(".elements__image");
-    const listText = listElement.querySelector(".elements__text");
-
-    listImage.src = element.link;
-    listText.textContent = element.name;
-    list.append(listElement);
-  });
+// open
+function popupOpen(modalWindow) {
+  modalWindow.classList.add("popup_opened");
 }
-addCardElement(initialCards);
+// close
+function popupClose(modalWindow) {
+  modalWindow.classList.remove("popup_opened");
+}
+// like
+function placeLike(e) {
+  e.target.classList.toggle("elements__like_active");
+}
+// delete
+function deleteCard(e) {
+  e.target.closest(".elements__list-item").remove();
+}
+// zooming images
+function zoomImage(imageSource, imageName) {
+  popupImageImage.src = imageSource;
+  popupImageText.textContent = imageName;
+}
 
-// ZOOMING IMAGES
+// IMAGE CREATION FUNCTION
 
-const zoomImage = (e) => {
-  if (popupImage.classList.contains("popup_opened")) {
-    popupImage.classList.remove("popup_opened");
-  } else {
-    popupImage.classList.add("popup_opened");
-  }
-  const clickedImage = e.target.src;
-  const clickedImageName = e.target.offsetParent.innerText;
-  popupImageImage.src = clickedImage;
-  popupImageText.textContent = clickedImageName;
-};
+function makeImage(elementLink, elementName) {
+  const listElement = listItemTemplate
+    .querySelector(".elements__list-item")
+    .cloneNode(true);
+  const listImage = listElement.querySelector(".elements__image");
+  const listText = listElement.querySelector(".elements__text");
+  listImage.src = elementLink;
+  listText.textContent = elementName;
 
-///////////////////////////////////////////////////////////////////////////////
+  // LIKES IN ADDED CARDS
+  listElement
+    .querySelector(".elements__like")
+    .addEventListener("click", placeLike);
 
-// Like button
-let likeButtons = Array.from(document.getElementsByClassName("elements__like"));
+  // DELETE
+  listElement
+    .querySelector(".element__delete")
+    .addEventListener("click", deleteCard);
 
-const checkLikeButtons = () => {
-  likeButtons.forEach((element) => {
-    element.addEventListener("click", (e) => {
-      const btn = e.target;
-      btn.classList.contains("elements__like_active")
-        ? btn.classList.remove("elements__like_active")
-        : btn.classList.add("elements__like_active");
+  //  ZOOMING OPENED IMAGES
+  listElement
+    .querySelector(".elements__image")
+    .addEventListener("click", (e) => {
+      zoomImage(
+        e.target.src,
+        e.target.closest(".elements__list-item").innerText
+      );
+      popupOpen(popupImage);
     });
+
+  // DELETING CARD
+  deleteButtons.forEach((el) => {
+    el.addEventListener("click", deleteCard);
   });
-};
-checkLikeButtons();
-///////////////////////////////////////////////////////////////////////////////
 
-// Open, Close Popup
+  return listElement;
+}
 
-const popupOpen = (e) => {
-  e.target.classList.value === "profile__edit-button"
-    ? popupEdit.classList.add("popup_opened")
-    : popupAdd.classList.add("popup_opened");
-};
+// Render Card
+function renderCard(elementLink, elementName) {
+  list.prepend(makeImage(elementLink, elementName));
+}
 
-const popupClose = () => {
-  popups.forEach(function (el) {
-    el.classList.remove("popup_opened");
-  });
-};
-
-closeButtons.forEach((el) => {
-  el.addEventListener("click", (e) => {
-    e.target.offsetParent.offsetParent.classList.remove("popup_opened");
-  });
+// Adding Initial Images
+initialCards.forEach((element) => {
+  renderCard(element.link, element.name);
 });
 
-addButton.addEventListener("click", (e) => {
-  popupOpen(e);
-});
+// saving new images
+function handlePictureAdding(evt) {
+  evt.preventDefault();
+  let newPictureName = popupPictureNameInput.value;
+  let newLinkValue = popupPictureLinkInput.value;
+  renderCard(newLinkValue, newPictureName);
+  popupClose(evt.target.closest(".popup"));
+  pictureForm.reset();
+}
 
-editButton.addEventListener("click", (e) => {
-  popupOpen(e);
-  popupNameInput.value = profileUsername.textContent;
-  popupProfessionInput.value = profileUserprofession.textContent;
-});
+// EDITING FORM
 
-///////////////////////////////////////////////////////////////////////////////
-// Editing form
-
-const usernameEditing = (evt) => {
+function usernameEditing(evt) {
   evt.preventDefault();
 
   const newUserContent = popupNameInput.value;
@@ -153,77 +130,33 @@ const usernameEditing = (evt) => {
 
   const newProfessionContent = popupProfessionInput.value;
   profileUserprofession.textContent = newProfessionContent;
+  popupClose(evt.target.closest(".popup"));
+}
 
-  popupClose();
-};
+////////////////////////////////////////////////////////////////////////////////////////
+// HANDLERS
 
+// SUBMIT EDITING BUTTON
 submitFormProfile.addEventListener("submit", usernameEditing);
 
-///////////////////////////////////////////////////////////////////////////////
-// SAVING FORM and functionality of saved pic
+//SUBMIT NEW IMAGE BUTTON
+submitFormImage.addEventListener("submit", handlePictureAdding);
 
-const pictureAdding = (evt) => {
-  evt.preventDefault();
-
-  const newPictureName = popupPictureNameInput.value;
-  const newLinkValue = popupPictureLinkInput.value;
-  const listElement = listItemTemplate
-    .querySelector(".elements__list-item")
-    .cloneNode(true);
-  const listImage = listElement.querySelector(".elements__image");
-  const listText = listElement.querySelector(".elements__text");
-  listElement.querySelector(".elements__like");
-  listImage.src = newLinkValue;
-  listText.textContent = newPictureName;
-
-  ///////////////////////////////////////////////////////////////////////////////
-  // LIKES IN ADDED CARDS
-
-  listElement
-    .querySelector(".elements__like")
-    .addEventListener("click", (e) => {
-      const result = e.target.classList.toggle("elements__like_active");
-      result
-        ? e.target.classList.add("elements__like_active")
-        : e.target.classList.remove("elements__like_active");
-    });
-
-  list.prepend(listElement);
-  popupClose();
-
-  listElement
-    .querySelector(".element__delete")
-    .addEventListener("click", (e) => {
-      e.target.offsetParent.remove();
-    });
-
-  //  ZOOMING OPENED IMAGES
-
-  listElement
-    .querySelector(".elements__image")
-    .addEventListener("click", (e) => {
-      zoomImage(e);
-    });
-};
-
-submitFormImage.addEventListener("submit", pictureAdding);
-
-///////////////////////////////////////////////////////////////////////////////
-// DELETING CARD
-
-let deleteButtons = document.querySelectorAll(".element__delete");
-
-deleteButtons.forEach((el) => {
-  el.addEventListener("click", (e) => {
-    e.target.offsetParent.remove();
+// CLOSING BUTTON
+closeButtons.forEach((el) => {
+  el.addEventListener("click", (evt) => {
+    popupClose(evt.target.closest(".popup"));
   });
 });
 
-// ZOOMING IMAGES
+// ADD BUTTON
+addButton.addEventListener("click", (e) => {
+  popupOpen(popupAdd);
+});
 
-const image = document.querySelectorAll(".elements__image");
-
-console.log();
-image.forEach((el) => {
-  el.addEventListener("click", zoomImage);
+// EDIT BUTTON
+editButton.addEventListener("click", (e) => {
+  popupOpen(popupEdit);
+  popupNameInput.value = profileUsername.textContent;
+  popupProfessionInput.value = profileUserprofession.textContent;
 });
