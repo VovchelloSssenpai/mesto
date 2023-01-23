@@ -2,7 +2,6 @@
 
 const editButton = document.querySelector(".profile__edit-button");
 const closeButtons = document.querySelectorAll(".popup__close-button");
-const popups = document.querySelectorAll(".popup");
 const popupEdit = document.querySelector(".popup_edit");
 const popupAdd = document.querySelector(".popup_add");
 const profileUsername = document.querySelector(".profile__user-name");
@@ -15,13 +14,6 @@ const popupProfessionInput = document.querySelector(
 );
 const popupPictureNameInput = document.querySelector(".popup__item_el_picture");
 const popupPictureLinkInput = document.querySelector(".popup__item_el_link");
-const popupSubmitButton = document.querySelector(".popup__submit-button");
-const popupSubmitProfileButton = document.querySelector(
-  ".popup__submit-button_profile"
-);
-const popupSubmitImageButton = document.querySelector(
-  ".popup__submit-button_image"
-);
 const submitFormProfile = document.querySelector(".popup__form-profile");
 const submitFormImage = document.querySelector(".popup__form-image");
 const list = document.querySelector(".elements__list");
@@ -30,8 +22,6 @@ const popupImage = document.querySelector(".popup-image");
 const popupImageImage = document.querySelector(".popup-image__image");
 const listItemTemplate = document.querySelector("#card").content;
 let popupImageText = document.querySelector(".popup-image__text");
-const deleteButtons = document.querySelectorAll(".element__delete");
-const image = document.querySelectorAll(".elements__image");
 const pictureForm = document.getElementById("add-form");
 import { initialCards } from "../modules/cards.js";
 
@@ -55,21 +45,30 @@ function deleteCard(e) {
   e.target.closest(".elements__list-item").remove();
 }
 // zooming images
-function zoomImage(imageSource, imageName) {
-  popupImageImage.src = imageSource;
-  popupImageText.textContent = imageName;
+function zoomImage(e) {
+  popupImageImage.src = e.target.src;
+  popupImageText.textContent = e.target.closest(
+    ".elements__list-item"
+  ).innerText;
+  popupOpen(popupImage);
 }
 
+// open profile edit
+function openProfileEdit(e) {
+  popupOpen(popupEdit);
+  popupNameInput.value = profileUsername.textContent;
+  popupProfessionInput.value = profileUserprofession.textContent;
+}
 // IMAGE CREATION FUNCTION
 
-function makeImage(elementLink, elementName) {
+function makeImage(element) {
   const listElement = listItemTemplate
     .querySelector(".elements__list-item")
     .cloneNode(true);
   const listImage = listElement.querySelector(".elements__image");
   const listText = listElement.querySelector(".elements__text");
-  listImage.src = elementLink;
-  listText.textContent = elementName;
+  listImage.src = element.link;
+  listText.textContent = element.name;
 
   // LIKES IN ADDED CARDS
   listElement
@@ -84,39 +83,32 @@ function makeImage(elementLink, elementName) {
   //  ZOOMING OPENED IMAGES
   listElement
     .querySelector(".elements__image")
-    .addEventListener("click", (e) => {
-      zoomImage(
-        e.target.src,
-        e.target.closest(".elements__list-item").innerText
-      );
-      popupOpen(popupImage);
-    });
-
-  // DELETING CARD
-  deleteButtons.forEach((el) => {
-    el.addEventListener("click", deleteCard);
-  });
+    .addEventListener("click", zoomImage);
 
   return listElement;
 }
 
 // Render Card
-function renderCard(elementLink, elementName) {
-  list.prepend(makeImage(elementLink, elementName));
+function renderCard(element) {
+  list.prepend(makeImage(element));
 }
 
 // Adding Initial Images
 initialCards.forEach((element) => {
-  renderCard(element.link, element.name);
+  renderCard(element);
 });
 
 // saving new images
 function handlePictureAdding(evt) {
   evt.preventDefault();
-  let newPictureName = popupPictureNameInput.value;
-  let newLinkValue = popupPictureLinkInput.value;
-  renderCard(newLinkValue, newPictureName);
-  popupClose(evt.target.closest(".popup"));
+  const newPictureName = popupPictureNameInput.value;
+  const newLinkValue = popupPictureLinkInput.value;
+  const imageObject = {
+    name: newPictureName,
+    link: newLinkValue,
+  };
+  renderCard(imageObject);
+  popupClose(popupAdd);
   pictureForm.reset();
 }
 
@@ -130,7 +122,7 @@ function usernameEditing(evt) {
 
   const newProfessionContent = popupProfessionInput.value;
   profileUserprofession.textContent = newProfessionContent;
-  popupClose(evt.target.closest(".popup"));
+  popupClose(popupEdit);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -155,8 +147,4 @@ addButton.addEventListener("click", (e) => {
 });
 
 // EDIT BUTTON
-editButton.addEventListener("click", (e) => {
-  popupOpen(popupEdit);
-  popupNameInput.value = profileUsername.textContent;
-  popupProfessionInput.value = profileUserprofession.textContent;
-});
+editButton.addEventListener("click", openProfileEdit);
