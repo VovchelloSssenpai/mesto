@@ -45,11 +45,9 @@ function deleteCard(e) {
   e.target.closest(".elements__list-item").remove();
 }
 // zooming images
-function zoomImage(e) {
-  popupImageImage.src = e.target.src;
-  popupImageText.textContent = e.target.closest(
-    ".elements__list-item"
-  ).innerText;
+function zoomImage(el) {
+  popupImageImage.src = el.link;
+  popupImageText.textContent = el.name;
   popupOpen(popupImage);
 }
 
@@ -83,7 +81,9 @@ function makeImage(element) {
   //  ZOOMING OPENED IMAGES
   listElement
     .querySelector(".elements__image")
-    .addEventListener("click", zoomImage);
+    .addEventListener("click", () => {
+      zoomImage(element);
+    });
 
   return listElement;
 }
