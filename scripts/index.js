@@ -21,7 +21,7 @@ const addButton = document.querySelector(".profile__add-button");
 const popupImage = document.querySelector(".popup-image");
 const popupImageImage = document.querySelector(".popup-image__image");
 const listItemTemplate = document.querySelector("#card").content;
-let popupImageText = document.querySelector(".popup-image__text");
+const popupImageText = document.querySelector(".popup-image__text");
 const pictureForm = document.getElementById("add-form");
 import { initialCards } from "../modules/cards.js";
 
