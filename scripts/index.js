@@ -149,10 +149,16 @@ function handleEditingUsername() {
 // HANDLERS
 
 // SUBMIT EDITING BUTTON
-profileFormSubmit.addEventListener("submit", handleEditingUsername);
+profileFormSubmit.addEventListener("submit", (e) => {
+  handleEditingUsername();
+  e.preventDefault();
+});
 
 //SUBMIT NEW IMAGE BUTTON
-imageFormSubmit.addEventListener("submit", handlePictureAdding);
+imageFormSubmit.addEventListener("submit", (e) => {
+  handlePictureAdding();
+  e.preventDefault();
+});
 
 // CLOSING BUTTON
 buttonsClosePopup.forEach((buttonElement) => {
