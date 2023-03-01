@@ -23,10 +23,11 @@ const cardsContainer = document.querySelector(".elements__list");
 const profileAddButton = document.querySelector(".profile__add-button");
 const popupImage = document.querySelector(".popup-image");
 const popupImageImage = document.querySelector(".popup-image__image");
-const listItemTemplate = document.querySelector("#card").content;
 const popupImageText = document.querySelector(".popup-image__text");
-const listItemElement = listItemTemplate.querySelector(".elements__list-item");
-import { initialCards } from "../modules/cards.js";
+const elementsForm = document.querySelectorAll(".popup__form");
+import { initialCards, formValidationConfig } from "../data/data.js";
+import { Card } from "./Card.js";
+import { FormValidator } from "./FormValidator.js";
 /////////////////////////////////////////////////////////////////////////////////////////////
 // FUNCTIONs
 
@@ -56,14 +57,6 @@ function closePopup(modalWindow) {
   document.removeEventListener("keydown", handleClosePopupByEsc);
 }
 
-// like
-function handlePlaceLike(likeElement) {
-  likeElement.classList.toggle("elements__like_active");
-}
-// delete
-function handleDeleteCard(cardElement) {
-  cardElement.remove();
-}
 // zooming images
 function handleZoomImage(cardData) {
   popupImageImage.src = cardData.link;
@@ -78,49 +71,32 @@ function openProfileEdit() {
   popupNameInput.value = profileUserName.textContent;
   popupProfessionInput.value = profileUserProfession.textContent;
 }
-// IMAGE CREATION FUNCTION
-
-function createCard(cardData) {
-  const listElement = listItemElement.cloneNode(true);
-  const listImage = listElement.querySelector(".elements__image");
-  const listText = listElement.querySelector(".elements__text");
-  const elementLike = listElement.querySelector(".elements__like");
-  const elementDelete = listElement.querySelector(".element__delete");
-  listImage.src = cardData.link;
-  listText.textContent = cardData.name;
-  listImage.alt = cardData.name;
-
-  // LIKES IN ADDED CARDS
-  elementLike.addEventListener("click", () => {
-    handlePlaceLike(elementLike);
-  });
-
-  // DELETE
-  elementDelete.addEventListener("click", () => {
-    handleDeleteCard(listElement);
-  });
-
-  //  ZOOMING OPENED IMAGES
-  listElement
-    .querySelector(".elements__image")
-    .addEventListener("click", () => {
-      handleZoomImage(cardData);
-    });
-
-  return listElement;
-}
 
 // Render Card
 function renderCard(cardData) {
-  cardsContainer.prepend(createCard(cardData));
+  cardsContainer.prepend(cardData);
 }
 
-// Adding Initial Images
+// Card adding handler
+function handleAddingCard(cardData) {
+  const card = new Card(cardData, document.querySelector("#card"));
+  const cardElement = card.generateCard();
+
+  cardElement
+    .querySelector(".elements__image")
+    .addEventListener("click", (e) => {
+      handleZoomImage(cardData);
+    });
+
+  renderCard(cardElement);
+}
+
+// Adding Initial Cards
 initialCards.forEach((cardData) => {
-  renderCard(cardData);
+  handleAddingCard(cardData);
 });
 
-// saving new images
+// saving new Cards
 function handlePictureAdding() {
   const pictureNameNew = popupPictureNameInput.value;
   const linkValueNew = popupPictureLinkInput.value;
@@ -128,10 +104,10 @@ function handlePictureAdding() {
     name: pictureNameNew,
     link: linkValueNew,
   };
-  renderCard(imageObject);
+  handleAddingCard(imageObject);
   closePopup(popupAdd);
   imageFormSubmit.reset();
-  toggleButton(imageFormSubmit, formValidationConfig);
+  handleFormValidation(formValidationConfig, imageFormSubmit);
 }
 
 // EDITING FORM
@@ -180,4 +156,18 @@ buttonEditProfile.addEventListener("click", (e) => {
 // Overlay CLOSING
 popupList.forEach((popupElement) => {
   popupElement.addEventListener("click", handleClosePopupByOverlay);
+});
+
+function handleFormValidation(formValidationConfig, formElement) {
+  const newValidationForm = new FormValidator(
+    formValidationConfig,
+    formElement
+  );
+
+  return newValidationForm.enableValidation();
+}
+
+// Handle form validation
+elementsForm.forEach((elementForm) => {
+  handleFormValidation(formValidationConfig, elementForm);
 });
