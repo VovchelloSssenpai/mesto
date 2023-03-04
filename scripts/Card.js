@@ -1,13 +1,13 @@
 class Card {
-  constructor(cardData, templateSelector) {
+  constructor(cardData, templateSelector, handleZoomImage) {
     this.cardData = cardData;
     this.link = cardData.link;
     this.text = cardData.name;
     this.templateSelector = templateSelector;
+    this.handleZoomImage = handleZoomImage;
   }
 
   _getTemplate() {
-    // здесь выполним все необходимые операции, чтобы вернуть разметку
     const cardElement = this.templateSelector.content
       .querySelector(".elements__list-item")
       .cloneNode(true);
@@ -31,6 +31,7 @@ class Card {
     const elementLike = this.element.querySelector(".elements__like");
     const elementDelete = this.element.querySelector(".element__delete");
     const elementImage = this.element.querySelector(".elements__image");
+
     elementLike.addEventListener("click", (e) => {
       this._handlePlaceLike(elementLike);
     });
@@ -39,7 +40,9 @@ class Card {
       this._handleDeleteCard(this.element);
     });
 
-    elementImage;
+    elementImage.addEventListener("click", (e) => {
+      this._handleZoomImage();
+    });
   }
 
   _handlePlaceLike(elementLike) {
@@ -48,6 +51,10 @@ class Card {
 
   _handleDeleteCard(cardElement) {
     cardElement.remove();
+  }
+
+  _handleZoomImage() {
+    this.handleZoomImage(this.cardData);
   }
 }
 

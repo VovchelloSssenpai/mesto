@@ -1,50 +1,66 @@
 class FormValidator {
-  constructor(formValidationConfig, formElement) {
-    this.formValidationConfig = formValidationConfig;
+  constructor(params, formElement) {
+    this.params = params;
+    this.inputErrorClass = params.inputErrorClass;
+    this.inputSelector = params.inputSelector;
+    this.buttonElement = params.submitButtonSelector;
     this.formElement = formElement;
-  }
-
-  _handleWrongInput(input, errorElement, config) {
-    input.classList.add(config.inputErrorClass);
-    errorElement.textContent = input.validationMessage;
-    errorElement.classList.add(this.formValidationConfig.errorClass);
-  }
-
-  _handleRightInput(input, errorElement, config) {
-    input.classList.remove(config.inputErrorClass);
-    errorElement.textContent = "";
-    errorElement.classList.remove(this.formValidationConfig.errorClass);
-  }
-
-  _toggleButton(formElement, formValidationConfig) {
-    const buttonSubmit = formElement.querySelector(
-      formValidationConfig.submitButtonSelector
+    this.inputElementsArray = Array.from(
+      this.formElement.querySelectorAll(this.inputSelector)
     );
-    const formValidity = formElement.checkValidity();
+  }
+
+  _handleWrongInput(input, errorElement) {
+    input.classList.add(this.inputErrorClass);
+    errorElement.textContent = input.validationMessage;
+    errorElement.classList.add(this.params.errorClass);
+  }
+
+  _handleRightInput(input, errorElement) {
+    input.classList.remove(this.inputErrorClass);
+    errorElement.textContent = "";
+    errorElement.classList.remove(this.params.errorClass);
+  }
+
+  _toggleButton() {
+    const buttonSubmit = this.formElement.querySelector(this.buttonElement);
+    const formValidity = this.formElement.checkValidity();
 
     buttonSubmit.classList.toggle(
-      formValidationConfig.inactiveButtonClass,
+      this.params.inactiveButtonClass,
       !formValidity
     );
     buttonSubmit.disabled = !formValidity;
   }
 
-  _handleFormInput(evt, config) {
-    const input = evt.target;
-    const inputID = input.id;
-    const elementError = document.querySelector(`.${inputID}-error`);
+  _handleFormInput(inputElement) {
+    const elementError = this.formElement.querySelector(
+      `.${inputElement.id}-error`
+    );
 
-    !input.validity.valid
-      ? this._handleWrongInput(input, elementError, config)
-      : this._handleRightInput(input, elementError, config);
+    !inputElement.validity.valid
+      ? this._handleWrongInput(inputElement, elementError)
+      : this._handleRightInput(inputElement, elementError);
+  }
+
+  resetValidation() {
+    this.inputElementsArray.forEach((inputElement) => {
+      const errorElement = this.formElement.querySelector(
+        `.${inputElement.id}-error`
+      );
+      this._handleRightInput(inputElement, errorElement);
+    });
+    this._toggleButton();
   }
 
   enableValidation() {
-    this._toggleButton(this.formElement, this.formValidationConfig);
-    this.formElement.addEventListener("input", (e) => {
-      e.preventDefault();
-      this._toggleButton(this.formElement, this.formValidationConfig);
-      this._handleFormInput(e, this.formValidationConfig);
+    this._toggleButton();
+    this.inputElementsArray.forEach((element) => {
+      element.addEventListener("input", (e) => {
+        e.preventDefault();
+        this._toggleButton();
+        this._handleFormInput(element);
+      });
     });
 
     return this.formElement;

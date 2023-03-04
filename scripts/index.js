@@ -28,6 +28,21 @@ const elementsForm = document.querySelectorAll(".popup__form");
 import { initialCards, formValidationConfig } from "../data/data.js";
 import { Card } from "./Card.js";
 import { FormValidator } from "./FormValidator.js";
+
+// INITIALIZING VALIDATION
+
+const profileEditValidation = new FormValidator(
+  formValidationConfig,
+  profileFormSubmit
+);
+profileEditValidation.enableValidation();
+
+const imageAddValidation = new FormValidator(
+  formValidationConfig,
+  imageFormSubmit
+);
+imageAddValidation.enableValidation();
+
 /////////////////////////////////////////////////////////////////////////////////////////////
 // FUNCTIONs
 
@@ -70,49 +85,49 @@ function openProfileEdit() {
   openPopup(popupEdit);
   popupNameInput.value = profileUserName.textContent;
   popupProfessionInput.value = profileUserProfession.textContent;
+  profileEditValidation.resetValidation();
 }
 
 // Render Card
 function renderCard(cardData) {
-  cardsContainer.prepend(cardData);
+  createCard(cardData);
 }
 
 // Card adding handler
-function handleAddingCard(cardData) {
-  const card = new Card(cardData, document.querySelector("#card"));
+function createCard(cardData) {
+  const card = new Card(
+    cardData,
+    document.querySelector("#card"),
+    handleZoomImage
+  );
   const cardElement = card.generateCard();
 
-  cardElement
-    .querySelector(".elements__image")
-    .addEventListener("click", (e) => {
-      handleZoomImage(cardData);
-    });
-
-  renderCard(cardElement);
+  cardsContainer.prepend(cardElement);
 }
 
 // Adding Initial Cards
 initialCards.forEach((cardData) => {
-  handleAddingCard(cardData);
+  renderCard(cardData);
 });
 
 // saving new Cards
-function handlePictureAdding() {
+function handlePictureAdding(evt) {
+  evt.preventDefault();
   const pictureNameNew = popupPictureNameInput.value;
   const linkValueNew = popupPictureLinkInput.value;
   const imageObject = {
     name: pictureNameNew,
     link: linkValueNew,
   };
-  handleAddingCard(imageObject);
+  renderCard(imageObject);
   closePopup(popupAdd);
   imageFormSubmit.reset();
-  handleFormValidation(formValidationConfig, imageFormSubmit);
 }
 
 // EDITING FORM
 
-function handleEditingUsername() {
+function handleEditingUsername(evt) {
+  evt.preventDefault();
   const userContentNew = popupNameInput.value;
   profileUserName.textContent = userContentNew;
 
@@ -125,16 +140,10 @@ function handleEditingUsername() {
 // HANDLERS
 
 // SUBMIT EDITING BUTTON
-profileFormSubmit.addEventListener("submit", (e) => {
-  handleEditingUsername();
-  e.preventDefault();
-});
+profileFormSubmit.addEventListener("submit", handleEditingUsername);
 
 //SUBMIT NEW IMAGE BUTTON
-imageFormSubmit.addEventListener("submit", (e) => {
-  handlePictureAdding();
-  e.preventDefault();
-});
+imageFormSubmit.addEventListener("submit", handlePictureAdding);
 
 // CLOSING BUTTON
 buttonsClosePopup.forEach((buttonElement) => {
@@ -146,28 +155,27 @@ buttonsClosePopup.forEach((buttonElement) => {
 // ADD BUTTON
 profileAddButton.addEventListener("click", () => {
   openPopup(popupAdd);
+  imageAddValidation.resetValidation();
 });
 
 // EDIT BUTTON
-buttonEditProfile.addEventListener("click", (e) => {
-  openProfileEdit(e);
-});
+buttonEditProfile.addEventListener("click", openProfileEdit);
 
 // Overlay CLOSING
 popupList.forEach((popupElement) => {
   popupElement.addEventListener("click", handleClosePopupByOverlay);
 });
 
-function handleFormValidation(formValidationConfig, formElement) {
-  const newValidationForm = new FormValidator(
-    formValidationConfig,
-    formElement
-  );
+// function handleFormValidation(formValidationConfig, formElement) {
+//   const newValidationForm = new FormValidator(
+//     formValidationConfig,
+//     formElement
+//   );
 
-  return newValidationForm.enableValidation();
-}
+//   return newValidationForm.enableValidation();
+// }
 
-// Handle form validation
-elementsForm.forEach((elementForm) => {
-  handleFormValidation(formValidationConfig, elementForm);
-});
+// // Handle form validation
+// elementsForm.forEach((elementForm) => {
+//   handleFormValidation(formValidationConfig, elementForm);
+// });
