@@ -1,10 +1,12 @@
+// import PopupWithImage from "./PopupWithImage.js";
+
 class Card {
-  constructor(cardData, templateSelector, handleZoomImage) {
+  constructor(cardData, templateSelector, handleCardClick) {
     this.cardData = cardData;
     this.link = cardData.link;
     this.text = cardData.name;
     this.templateSelector = templateSelector;
-    this.handleZoomImage = handleZoomImage;
+    this.handleCardClick = handleCardClick;
   }
 
   _getTemplate() {
@@ -41,7 +43,7 @@ class Card {
     });
 
     elementImage.addEventListener("click", (e) => {
-      this._handleZoomImage();
+      this._handleCardClick();
     });
   }
 
@@ -53,8 +55,8 @@ class Card {
     cardElement.remove();
   }
 
-  _handleZoomImage() {
-    this.handleZoomImage(this.cardData);
+  _handleCardClick() {
+    this.handleCardClick(this.text, this.link, this.element);
   }
 }
 
