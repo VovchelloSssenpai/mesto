@@ -7,6 +7,6 @@
 
 @media (max-width: 641px) {
   .popup__label {
-    margin: 0;
+    margin-bottom: 60;
   }
 }

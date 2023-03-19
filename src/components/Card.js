@@ -30,33 +30,33 @@ class Card {
   }
 
   _setEventListeners() {
-    const elementLike = this.element.querySelector(".elements__like");
-    const elementDelete = this.element.querySelector(".element__delete");
-    const elementImage = this.element.querySelector(".elements__image");
+    this.elementLike = this.element.querySelector(".elements__like");
+    this.elementDelete = this.element.querySelector(".element__delete");
+    this.elementImage = this.element.querySelector(".elements__image");
 
-    elementLike.addEventListener("click", (e) => {
-      this._handlePlaceLike(elementLike);
+    this.elementLike.addEventListener("click", (e) => {
+      this._handlePlaceLike();
     });
 
-    elementDelete.addEventListener("click", (e) => {
-      this._handleDeleteCard(this.element);
+    this.elementDelete.addEventListener("click", (e) => {
+      this._handleDeleteCard();
     });
 
-    elementImage.addEventListener("click", (e) => {
+    this.elementImage.addEventListener("click", (e) => {
       this._handleCardClick();
     });
   }
 
-  _handlePlaceLike(elementLike) {
-    elementLike.classList.toggle("elements__like_active");
+  _handlePlaceLike() {
+    this.elementLike.classList.toggle("elements__like_active");
   }
 
-  _handleDeleteCard(cardElement) {
-    cardElement.remove();
+  _handleDeleteCard() {
+    this.element.remove();
   }
 
   _handleCardClick() {
-    this.handleCardClick(this.text, this.link, this.element);
+    this.handleCardClick(this.text, this.link);
   }
 }
 

@@ -8,6 +8,9 @@ class FormValidator {
     this.inputElementsArray = Array.from(
       this.formElement.querySelectorAll(this.inputSelector)
     );
+    this.buttonSubmitElement = this.formElement.querySelector(
+      this.buttonElement
+    );
   }
 
   _handleWrongInput(input, errorElement) {
@@ -23,14 +26,12 @@ class FormValidator {
   }
 
   _toggleButton() {
-    const buttonSubmit = this.formElement.querySelector(this.buttonElement);
     const formValidity = this.formElement.checkValidity();
-
-    buttonSubmit.classList.toggle(
+    this.buttonSubmitElement.classList.toggle(
       this.params.inactiveButtonClass,
       !formValidity
     );
-    buttonSubmit.disabled = !formValidity;
+    this.buttonSubmitElement.disabled = !formValidity;
   }
 
   _handleFormInput(inputElement) {
@@ -57,7 +58,6 @@ class FormValidator {
     this._toggleButton();
     this.inputElementsArray.forEach((element) => {
       element.addEventListener("input", (e) => {
-        e.preventDefault();
         this._toggleButton();
         this._handleFormInput(element);
       });

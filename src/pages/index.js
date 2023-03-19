@@ -6,17 +6,13 @@ import {
   initialCards,
   formValidationConfig,
   buttonEditProfile,
-  popupEdit,
-  popupAdd,
-  profileUserName,
-  profileUserProfession,
   popupNameInput,
   popupProfessionInput,
   profileFormSubmit,
   imageFormSubmit,
-  cardsContainer,
   profileAddButton,
-  popupImage,
+  elementProfileUsername,
+  elementProfileProfession,
 } from "../utils/utils.js";
 import { Card } from "../components/Card.js";
 import { FormValidator } from "../components/FormValidator.js";
@@ -40,23 +36,21 @@ imageAddValidation.enableValidation();
 
 // INITIALIZING USER INFO
 const profileData = {
-  name: profileUserName,
-  profession: profileUserProfession,
+  name: ".profile__user-name",
+  profession: ".profile__user-profession",
 };
 const userInfo = new UserInfo(profileData);
 
 // INITIALIZING POPUP
-const formPopup = new PopupWithForm(popupEdit, (object) => {
+const formPopup = new PopupWithForm(".popup_edit", (object) => {
   userInfo.setUserInfo(object);
   formPopup.popupClose();
-  profileEditValidation.resetValidation();
 });
 formPopup.setEventListeners();
 
-const imagePopup = new PopupWithForm(popupAdd, (imageObject) => {
+const imagePopup = new PopupWithForm(".popup_add", (imageObject) => {
   renderCard(imageObject);
   imagePopup.popupClose();
-  imageAddValidation.resetValidation();
 });
 imagePopup.setEventListeners();
 // /////////////////////////////////////////////////////////////////////////////////////////////
@@ -67,14 +61,14 @@ function renderCard(cardData) {
   defaultCardList.addItem(createCard(cardData));
 }
 
+const popupWithImageClick = new PopupWithImage(".popup-image");
 // Card adding handler
 function createCard(cardData) {
   const card = new Card(
     cardData,
     document.querySelector("#card"),
     (text, link) => {
-      const PopupWithImageClick = new PopupWithImage(popupImage);
-      PopupWithImageClick.popupOpen(text, link);
+      popupWithImageClick.popupOpen(text, link);
     }
   );
   const cardElement = card.generateCard();
@@ -82,48 +76,46 @@ function createCard(cardData) {
   return cardElement;
 }
 
-// // EDITING FORM
-
-function handleEditingUsername(evt) {
-  evt.preventDefault();
-  const userContentNew = popupNameInput.value;
-  profileUserName.textContent = userContentNew;
-
-  const professionContentNew = popupProfessionInput.value;
-  profileUserProfession.textContent = professionContentNew;
-  closePopup(popupEdit);
-}
-
 // ////////////////////////////////////////////////////////////////////////////////////////
-// // HANDLERS
+// // EVENT LISTENERS
 
 // ADD BUTTON
 profileAddButton.addEventListener("click", (e) => {
+  imageAddValidation.resetValidation();
   imagePopup.popupOpen();
 });
 
 // EDIT BUTTON
+// const profileData = {
+//   nameInput: elementProfileUsername,
+//   professionInput: elementProfileProfession,
+// };
+
 buttonEditProfile.addEventListener("click", (e) => {
+  userInfo.getUserInfo();
+  profileEditValidation.resetValidation();
   formPopup.popupOpen();
-  // userInfo.setUserInfo(userInfo.getUserInfo());
 });
 
 const defaultCardList = new Section(
   {
     items: initialCards,
     renderer: (item) => {
-      const card = new Card(
-        item,
-        document.querySelector("#card"),
-        (text, link) => {
-          const PopupWithImageClick = new PopupWithImage(popupImage);
-          PopupWithImageClick.popupOpen(text, link);
-        }
-      );
-      const cardElement = card.generateCard();
-      defaultCardList.addItem(cardElement);
+      renderCard(item);
     },
   },
-  cardsContainer
+  ".elements__list"
 );
 defaultCardList.renderItems();
+
+// // EDITING FORM
+
+// function handleEditingUsername(evt) {
+//   evt.preventDefault();
+//   const userContentNew = popupNameInput.value;
+//   profileUserName.textContent = userContentNew;
+
+//   const professionContentNew = popupProfessionInput.value;
+//   profileUserProfession.textContent = professionContentNew;
+//   closePopup(popupEdit);
+// }
