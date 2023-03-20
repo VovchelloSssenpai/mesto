@@ -6,13 +6,9 @@ import {
   initialCards,
   formValidationConfig,
   buttonEditProfile,
-  popupNameInput,
-  popupProfessionInput,
   profileFormSubmit,
   imageFormSubmit,
   profileAddButton,
-  elementProfileUsername,
-  elementProfileProfession,
 } from "../utils/utils.js";
 import { Card } from "../components/Card.js";
 import { FormValidator } from "../components/FormValidator.js";
@@ -62,6 +58,7 @@ function renderCard(cardData) {
 }
 
 const popupWithImageClick = new PopupWithImage(".popup-image");
+popupWithImageClick.setEventListeners();
 // Card adding handler
 function createCard(cardData) {
   const card = new Card(
@@ -86,13 +83,9 @@ profileAddButton.addEventListener("click", (e) => {
 });
 
 // EDIT BUTTON
-// const profileData = {
-//   nameInput: elementProfileUsername,
-//   professionInput: elementProfileProfession,
-// };
 
 buttonEditProfile.addEventListener("click", (e) => {
-  userInfo.getUserInfo();
+  formPopup.setInputValues(userInfo.getUserInfo());
   profileEditValidation.resetValidation();
   formPopup.popupOpen();
 });
@@ -107,15 +100,3 @@ const defaultCardList = new Section(
   ".elements__list"
 );
 defaultCardList.renderItems();
-
-// // EDITING FORM
-
-// function handleEditingUsername(evt) {
-//   evt.preventDefault();
-//   const userContentNew = popupNameInput.value;
-//   profileUserName.textContent = userContentNew;
-
-//   const professionContentNew = popupProfessionInput.value;
-//   profileUserProfession.textContent = professionContentNew;
-//   closePopup(popupEdit);
-// }

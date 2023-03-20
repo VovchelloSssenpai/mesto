@@ -53,6 +53,7 @@ class Card {
 
   _handleDeleteCard() {
     this.element.remove();
+    this.elementa = null;
   }
 
   _handleCardClick() {

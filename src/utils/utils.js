@@ -37,13 +37,6 @@ export const formValidationConfig = {
 export const buttonEditProfile = document.querySelector(
   ".profile__edit-button"
 );
-
 export const profileFormSubmit = document.querySelector(".popup__form-profile");
 export const imageFormSubmit = document.querySelector(".popup__form-image");
 export const profileAddButton = document.querySelector(".profile__add-button");
-export const elementProfileUsername = document.querySelector(
-  ".profile__user-name"
-);
-export const elementProfileProfession = document.querySelector(
-  ".profile__user-profession"
-);

@@ -2,16 +2,14 @@ export class UserInfo {
   constructor({ name, profession }) {
     this.nameElement = document.querySelector(name);
     this.professionElement = document.querySelector(profession);
-
-    this.popupNameInput = document.querySelector(".popup__input_el_name");
-    this.popupProfessionInput = document.querySelector(
-      ".popup__input_el_profession"
-    );
   }
 
   getUserInfo() {
-    this.popupNameInput.value = this.nameElement.textContent;
-    this.popupProfessionInput.value = this.professionElement.textContent;
+    const userData = {
+      name: this.nameElement.textContent,
+      profession: this.professionElement.textContent,
+    };
+    return userData;
   }
 
   setUserInfo({ nameInput, professionInput }) {

@@ -7,6 +7,11 @@ export class PopupWithForm extends Popup {
     this.popupForm = this.popup.querySelector(".popup__form");
     this.popupInputs = this.popupForm.querySelectorAll(".popup__input");
     this.submitButton = this.popupForm.querySelector(".popup__submit-button");
+    this.popupNameInput = this.popupForm.querySelector(".popup__input_el_name");
+
+    this.popupProfessionInput = this.popupForm.querySelector(
+      ".popup__input_el_profession"
+    );
   }
 
   _getInputValues() {
@@ -32,5 +37,10 @@ export class PopupWithForm extends Popup {
   popupClose() {
     this.popupForm.reset();
     super.popupClose();
+  }
+
+  setInputValues({ name, profession }) {
+    this.popupNameInput.value = name;
+    this.popupProfessionInput.value = profession;
   }
 }
