@@ -12,8 +12,8 @@ export class UserInfo {
     return userData;
   }
 
-  setUserInfo({ nameInput, professionInput }) {
-    this.nameElement.textContent = nameInput;
-    this.professionElement.textContent = professionInput;
+  setUserInfo({ name, profession }) {
+    this.nameElement.textContent = name;
+    this.professionElement.textContent = profession;
   }
 }
