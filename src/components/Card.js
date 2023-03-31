@@ -1,12 +1,13 @@
 // import PopupWithImage from "./PopupWithImage.js";
 
 class Card {
-  constructor(cardData, templateSelector, handleCardClick) {
+  constructor(cardData, templateSelector, handleCardClick, handlePopupOpen) {
     this.cardData = cardData;
     this.link = cardData.link;
     this.text = cardData.name;
     this.templateSelector = templateSelector;
     this.handleCardClick = handleCardClick;
+    this.handlePopupOpen = handlePopupOpen;
   }
 
   _getTemplate() {
@@ -25,8 +26,16 @@ class Card {
     listImage.src = this.link;
     listText.textContent = this.text;
     listImage.alt = this.text;
-
+    this._setLikeNumbers();
+    this._ifpictureOwn();
     return this.element;
+  }
+
+  _setLikeNumbers() {
+    const likeNumber = this.element.querySelector(".elements__like-number");
+    if (this.cardData.likes) {
+      likeNumber.textContent = this.cardData.likes.length;
+    }
   }
 
   _setEventListeners() {
@@ -39,7 +48,7 @@ class Card {
     });
 
     this.elementDelete.addEventListener("click", (e) => {
-      this._handleDeleteCard();
+      this._handleBasketClick();
     });
 
     this.elementImage.addEventListener("click", (e) => {
@@ -51,14 +60,27 @@ class Card {
     this.elementLike.classList.toggle("elements__like_active");
   }
 
+  _handleBasketClick() {
+    this.handlePopupOpen(this.cardData._id, this.element);
+  }
+
+  _ifpictureOwn() {
+    if (this.cardData.owner._id === "eaeb282351385a0f6793a964") {
+    } else {
+      this.elementDelete.remove();
+    }
+  }
+
   _handleDeleteCard() {
     this.element.remove();
-    this.elementa = null;
+    this.element = null;
   }
 
   _handleCardClick() {
     this.handleCardClick(this.text, this.link);
   }
 }
+
+// мой ID eaeb282351385a0f6793a964
 
 export { Card };

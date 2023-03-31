@@ -3,12 +3,12 @@ import "../pages/index.css";
 // DOM Elements
 
 import {
-  initialCards,
   formValidationConfig,
   buttonEditProfile,
   profileFormSubmit,
   imageFormSubmit,
   profileAddButton,
+  profileInfoTemplates,
 } from "../utils/utils.js";
 import { Card } from "../components/Card.js";
 import { FormValidator } from "../components/FormValidator.js";
@@ -16,6 +16,8 @@ import { Section } from "../components/Section.js";
 import { PopupWithImage } from "../components/PopupWithImage.js";
 import { PopupWithForm } from "../components/PopupWithForm.js";
 import { UserInfo } from "../components/UserInfo.js";
+import { Api } from "../components/Api.js";
+import { PopupWithDelete } from "../components/PopupWithDelete.js";
 // INITIALIZING VALIDATION
 
 const profileEditValidation = new FormValidator(
@@ -41,14 +43,22 @@ const userInfo = new UserInfo(profileData);
 const formPopup = new PopupWithForm(".popup_edit", (object) => {
   userInfo.setUserInfo(object);
   formPopup.popupClose();
+  api.sendProfileData(userInfo.getUserInfo());
 });
 formPopup.setEventListeners();
 
 const imagePopup = new PopupWithForm(".popup_add", (imageObject) => {
-  renderCard(imageObject);
+  api.addNewImage(imageObject);
   imagePopup.popupClose();
 });
 imagePopup.setEventListeners();
+
+const deletePopup = new PopupWithDelete(".popup_delete", (cardID, element) => {
+  api
+    .deleteImage(cardID)
+    .then(card._handleDeleteCard(element), deletePopup.popupClose());
+});
+deletePopup.setEventListeners();
 // /////////////////////////////////////////////////////////////////////////////////////////////
 // // FUNCTIONs
 
@@ -66,6 +76,9 @@ function createCard(cardData) {
     document.querySelector("#card"),
     (text, link) => {
       popupWithImageClick.popupOpen(text, link);
+    },
+    (cardID) => {
+      deletePopup.popupOpen(cardID);
     }
   );
   const cardElement = card.generateCard();
@@ -92,11 +105,27 @@ buttonEditProfile.addEventListener("click", (e) => {
 
 const defaultCardList = new Section(
   {
-    items: initialCards,
     renderer: (item) => {
       renderCard(item);
     },
   },
   ".elements__list"
 );
-defaultCardList.renderItems();
+defaultCardList.deleteElement();
+// INITIALIZING API
+
+const api = new Api({
+  baseUrl: "https://mesto.nomoreparties.co/v1/cohort-62",
+  headers: {
+    authorization: "fb85a167-fa0c-4b77-b6c4-6e80ca894d63",
+    "Content-Type": "application/json",
+  },
+});
+
+// Initial profile
+api.setInitialProfileData(profileInfoTemplates);
+// Initial images
+const initialImages = api.getInitialImages();
+initialImages.then((data) => {
+  defaultCardList.renderItems(data);
+});
