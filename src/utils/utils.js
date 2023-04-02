@@ -16,5 +16,9 @@ export const buttonEditProfile = document.querySelector(
 );
 export const profileFormSubmit = document.querySelector(".popup__form-profile");
 export const imageFormSubmit = document.querySelector(".popup__form-image");
+export const avatarFormSubmit = document.querySelector(".popup__form-avatar");
 export const profileAddButton = document.querySelector(".profile__add-button");
 export const buttonDeleteCard = document.querySelector(".element__delete");
+export const buttonEditAvatar = document.querySelector(
+  ".profile__avatar-edit-button"
+);

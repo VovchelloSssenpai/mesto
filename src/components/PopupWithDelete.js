@@ -7,10 +7,10 @@ export class PopupWithDelete extends Popup {
     this.submitButton = this.popup.querySelector(".popup__submit-button");
   }
 
-  popupOpen(cardID, element) {
+  popupOpen(cardID, card) {
     super.popupOpen();
     this.cardID = cardID;
-    this.element = element;
+    this.card = card;
   }
 
   setEventListeners() {
@@ -20,9 +20,8 @@ export class PopupWithDelete extends Popup {
 
   handleCardDelete() {
     this.submitButton.addEventListener("click", (e) => {
-      console.log(this.cardID);
       e.preventDefault();
-      this.submitFormHandler(this.cardID, this.element);
+      this.submitFormHandler(this.cardID, this.card);
     });
   }
 }

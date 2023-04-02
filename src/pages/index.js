@@ -1,7 +1,5 @@
 import "../pages/index.css";
 
-// DOM Elements
-
 import {
   formValidationConfig,
   buttonEditProfile,
@@ -9,7 +7,10 @@ import {
   imageFormSubmit,
   profileAddButton,
   profileInfoTemplates,
+  buttonEditAvatar,
+  avatarFormSubmit,
 } from "../utils/utils.js";
+
 import { Card } from "../components/Card.js";
 import { FormValidator } from "../components/FormValidator.js";
 import { Section } from "../components/Section.js";
@@ -18,8 +19,8 @@ import { PopupWithForm } from "../components/PopupWithForm.js";
 import { UserInfo } from "../components/UserInfo.js";
 import { Api } from "../components/Api.js";
 import { PopupWithDelete } from "../components/PopupWithDelete.js";
-// INITIALIZING VALIDATION
 
+// INITIALIZING VALIDATION
 const profileEditValidation = new FormValidator(
   formValidationConfig,
   profileFormSubmit
@@ -32,6 +33,12 @@ const imageAddValidation = new FormValidator(
 );
 imageAddValidation.enableValidation();
 
+const avatarEditValidation = new FormValidator(
+  formValidationConfig,
+  avatarFormSubmit
+);
+avatarEditValidation.enableValidation();
+
 // INITIALIZING USER INFO
 const profileData = {
   name: ".profile__user-name",
@@ -42,25 +49,43 @@ const userInfo = new UserInfo(profileData);
 // INITIALIZING POPUP
 const formPopup = new PopupWithForm(".popup_edit", (object) => {
   userInfo.setUserInfo(object);
+
+  api.sendProfileData(userInfo.getUserInfo()).finally((res) => {
+    formPopup.renderLoading(false);
+  });
   formPopup.popupClose();
-  api.sendProfileData(userInfo.getUserInfo());
 });
 formPopup.setEventListeners();
 
 const imagePopup = new PopupWithForm(".popup_add", (imageObject) => {
-  api.addNewImage(imageObject);
+  api
+    .addNewImage(imageObject)
+    .then((res) => {
+      renderCard(res);
+    })
+    .finally((res) => {
+      formPopup.renderLoading(false);
+    });
+
   imagePopup.popupClose();
 });
 imagePopup.setEventListeners();
 
-const deletePopup = new PopupWithDelete(".popup_delete", (cardID, element) => {
-  api
-    .deleteImage(cardID)
-    .then(card._handleDeleteCard(element), deletePopup.popupClose());
+const avatarPopup = new PopupWithForm(".popup_avatar", (link) => {
+  api.updateAvatar(link).then((res) => {
+    userInfo.setUserAvatar(link);
+    avatarPopup.popupClose();
+  });
+});
+avatarPopup.setEventListeners();
+
+const deletePopup = new PopupWithDelete(".popup_delete", (cardID, card) => {
+  api.deleteImage(cardID).then((res) => {
+    card._handleDeleteCard();
+    deletePopup.popupClose();
+  });
 });
 deletePopup.setEventListeners();
-// /////////////////////////////////////////////////////////////////////////////////////////////
-// // FUNCTIONs
 
 // Render Card
 function renderCard(cardData) {
@@ -71,16 +96,29 @@ const popupWithImageClick = new PopupWithImage(".popup-image");
 popupWithImageClick.setEventListeners();
 // Card adding handler
 function createCard(cardData) {
-  const card = new Card(
-    cardData,
-    document.querySelector("#card"),
-    (text, link) => {
+  const card = new Card(cardData, document.querySelector("#card"), {
+    handleCardClick: (text, link) => {
       popupWithImageClick.popupOpen(text, link);
     },
-    (cardID) => {
-      deletePopup.popupOpen(cardID);
-    }
-  );
+    handlePopupOpen: (cardID) => {
+      deletePopup.popupOpen(cardID, card);
+    },
+    handlePlaceLike: (cardID) => {
+      if (!card.ifLikePlaced()) {
+        api.placeLike(cardID).then((res) => {
+          card.setLikeNumbers(res.likes.length);
+          card.liked();
+          card.cardData.likes = res.likes;
+        });
+      } else {
+        api.removeLike(cardID).then((res) => {
+          card.setLikeNumbers(res.likes.length);
+          card.disliked();
+          card.cardData.likes = res.likes;
+        });
+      }
+    },
+  });
   const cardElement = card.generateCard();
 
   return cardElement;
@@ -103,6 +141,10 @@ buttonEditProfile.addEventListener("click", (e) => {
   formPopup.popupOpen();
 });
 
+buttonEditAvatar.addEventListener("click", (e) => {
+  avatarPopup.popupOpen();
+});
+
 const defaultCardList = new Section(
   {
     renderer: (item) => {
@@ -111,7 +153,7 @@ const defaultCardList = new Section(
   },
   ".elements__list"
 );
-defaultCardList.deleteElement();
+
 // INITIALIZING API
 
 const api = new Api({

@@ -16,4 +16,9 @@ export class UserInfo {
     this.nameElement.textContent = name;
     this.professionElement.textContent = profession;
   }
+
+  setUserAvatar({ link }) {
+    const userAvatar = document.querySelector(".profile__avatar");
+    userAvatar.src = link;
+  }
 }

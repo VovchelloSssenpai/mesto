@@ -98,4 +98,73 @@ export class Api {
         console.error(error);
       });
   }
+
+  getLikesInfo(cardID) {
+    return fetch(`${this.imageUrl}/${cardID}/likes`, {
+      method: "PUT",
+      headers: this.headers,
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+        return Promise.reject(`Что-то пошло не так: ${res.status}`);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+
+  placeLike(cardID) {
+    return fetch(`${this.imageUrl}/${cardID}/likes`, {
+      method: "PUT",
+      headers: this.headers,
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+        return Promise.reject(`Что-то пошло не так: ${res.status}`);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+
+  removeLike(cardID) {
+    return fetch(`${this.imageUrl}/${cardID}/likes`, {
+      method: "DELETE",
+      headers: this.headers,
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+        return Promise.reject(`Что-то пошло не так: ${res.status}`);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+
+  updateAvatar({ link }) {
+    return fetch(`${this.profileURL}/avatar`, {
+      method: "PATCH",
+      headers: this.headers,
+      body: JSON.stringify({
+        avatar: link,
+      }),
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+        return Promise.reject(`Что-то пошло не так: ${res.status}`);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
 }
+
+// _ID eaeb282351385a0f6793a964

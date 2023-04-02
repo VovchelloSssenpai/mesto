@@ -26,6 +26,9 @@
 @import url(../blocks/profile/__edit-button/profile__edit-button.css);
 @import url(../blocks/profile/__add-button/profile__add-button.css);
 @import url(../blocks/profile/__info-wrapper/profile__info-wrapper.css);
+@import url(../blocks/profile/__avatar-edit-button/profile__avatar-edit-button.css);
+@import url(../blocks/profile/__avatar-wrap/profile__avatar-wrap.css);
+@import url(../blocks/profile/__avatar-edit-wrap/profile__avatar-edit-wrap.css);
 
 /* Elements */
 @import url(../blocks/elements/elements.css);
