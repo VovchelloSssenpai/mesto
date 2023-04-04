@@ -6,7 +6,7 @@
 .header__logo{height:33px;padding-bottom:35px;width:142px}@media (max-width:450px){.header__logo{height:24.4px;margin-left:27px;padding-bottom:26.5px;width:103.74px}}
 .main{width:68.7%}@media (max-width:845px){.main{width:80%}}@media (max-width:641px){.main{width:88.2%}}
 .profile{align-items:center;display:flex;padding-bottom:51px;padding-top:41px}@media (max-width:940px){.profile{flex-direction:column;padding-bottom:37px}}
-.profile__avatar{border-radius:50%;height:120px;margin-right:30px;width:120px}@media (max-width:940px){.profile__avatar{margin-bottom:28px;margin-right:0}}
+.profile__avatar{border-radius:50%;cursor:pointer;height:120px;margin-right:30px;width:120px}@media (max-width:940px){.profile__avatar{margin-bottom:28px;margin-right:0}}
 .profile__info{max-width:336px}
 .profile__user-name{font-size:42px;font-weight:500;line-height:1.14;margin:0;max-width:294px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;width:100%}@media (max-width:940px){.profile__user-name{font-size:27px;max-width:189px;text-align:center}}
 .profile__user-profession{font-size:18px;font-weight:400;line-height:1.22;margin:5px 0 0;max-width:336px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;width:100%}@media (max-width:940px){.profile__user-profession{font-size:14px;line-height:1.14;margin:9px 0 0;max-width:282px;text-align:center}}
@@ -29,14 +29,14 @@
 .elements__wrapper{margin-left:auto;margin-right:20px}
 .footer{color:#545454;font-size:18px;font-weight:400;line-height:1.22222;margin:0;padding-bottom:56px;width:68.7%}@media (max-width:845px){.footer{width:80%}}@media (max-width:641px){.footer{font-size:14px;line-height:1.21429;padding-bottom:36px;width:88.2%}}
 .footer__copyright{margin:0}
-.popup{align-items:center;background-color:rgba(0,0,0,.5);cursor:pointer;display:flex;height:100%;justify-content:center;left:0;opacity:0;position:fixed;top:0;transition:all .5 linear;visibility:hidden;width:100%}
+.popup{align-items:center;background-color:rgba(0,0,0,.5);cursor:pointer;display:flex;height:100%;justify-content:center;left:0;opacity:0;position:fixed;top:0;transition:opacity .5s,visibility 0s linear .5s;visibility:hidden;width:100%}
 .popup__body{align-items:center;background-color:#fff;border-radius:10px;color:#000;cursor:default;display:flex;flex-direction:column;padding:34px 0 37px;position:relative;width:430px}@media (max-width:641px){.popup__body{padding:0 0 25px;width:282px}}
 .popup__form{align-items:center;display:flex;flex-direction:column}
 .popup__submit-button{background-color:#000;border:none;border-radius:2px;color:#fff;cursor:pointer;display:block;font-size:18px;font-weight:400;line-height:1.22222;margin:auto;padding:13px 129px 17px;transition:background-color .5s}.popup__submit-button:hover{background-color:rgba(0,0,0,.8)}@media (max-width:641px){.popup__submit-button{font-size:14px;line-height:1.21429;padding:16px 81px 16px 79px}}
 .popup__submit-button_disabled{background-color:#fff;border:1px solid #c4c4c4;color:#c4c4c4;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}
 .popup__header{font-size:24px;font-weight:900;line-height:1.20833;margin:0 0 52px;max-width:360px;width:100%;z-index:1}@media (max-width:641px){.popup__header{font-size:18px;line-height:1.22222;margin:25px 0 55px;max-width:238px}}
 .popup__close-button{background-color:transparent;background-image:url(images/close-Icon.039f1f5203f653b4bacd.svg);background-size:contain;border:none;cursor:pointer;display:block;height:32px;padding:0;position:absolute;right:-40px;top:-40px;transition:opacity .5s;width:32px}.popup__close-button:hover{opacity:.6}@media (max-width:641px){.popup__close-button{height:20px;right:0;top:-36px;width:20px}}
-.popup_opened{opacity:1;visibility:visible}
+.popup_opened{opacity:1;transition:opacity .5s,visibility 0s linear 0s;visibility:visible}
 .popup__input{border:none;border-bottom:1px solid rgba(0,0,0,.2);font-size:14px;font-weight:400;line-height:1.21429;margin:0;padding-bottom:8px;width:100%}@media (max-width:641px){.popup__input:last-of-type{margin:0}}
 .popup__input_type_error{border-bottom:1px solid red}
 .popup__input-error{color:red;font-size:12px;left:0;opacity:0;position:absolute;top:calc(100% + 6px)}
