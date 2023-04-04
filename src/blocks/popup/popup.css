@@ -10,7 +10,6 @@
   visibility: hidden;
   display: flex;
   opacity: 0;
-  -webkit-transition: opacity 0.7s;
-  transition: all 0.5 linear;
+  transition: opacity 0.5s, visibility 0s linear 0.5s;
   cursor: pointer;
 }

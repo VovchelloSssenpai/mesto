@@ -6,10 +6,10 @@ export const formValidationConfig = {
   inputErrorClass: "popup__input_type_error",
   errorClass: "popup__input-error-active",
 };
-export const profileInfoTemplates = {
-  avatar: ".profile__avatar",
+export const profileData = {
   name: ".profile__user-name",
-  about: ".profile__user-profession",
+  profession: ".profile__user-profession",
+  avatar: ".profile__avatar",
 };
 export const buttonEditProfile = document.querySelector(
   ".profile__edit-button"
@@ -19,6 +19,4 @@ export const imageFormSubmit = document.querySelector(".popup__form-image");
 export const avatarFormSubmit = document.querySelector(".popup__form-avatar");
 export const profileAddButton = document.querySelector(".profile__add-button");
 export const buttonDeleteCard = document.querySelector(".element__delete");
-export const buttonEditAvatar = document.querySelector(
-  ".profile__avatar-edit-button"
-);
+export const avatarWrap = document.querySelector(".profile__avatar-wrap");

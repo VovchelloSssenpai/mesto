@@ -115,14 +115,6 @@ class Card {
     }
   }
 
-  // ifLikePlacedAddColor() {
-  //   if (this.ifLikePlaced()) {
-  //     this.elementLike.classList.add("elements__like_active");
-  //   } else {
-  //     this.elementLike.classList.remove("elements__like_active");
-  //   }
-  // }
-
   _handleDeleteCard() {
     this.element.remove();
     this.element = null;
@@ -133,15 +125,4 @@ class Card {
   }
 }
 
-// мой ID eaeb282351385a0f6793a964
-
 export { Card };
-
-// OLD
-
-// setLikeNumbers() {
-//   const likeNumber = this.element.querySelector(".elements__like-number");
-//   if (this.cardData.likes) {
-//     likeNumber.textContent = this.cardData.likes.length;
-//   }
-// }
