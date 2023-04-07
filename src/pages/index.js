@@ -46,7 +46,7 @@ const userInfo = new UserInfo(profileData);
 // INITIALIZING POPUP
 const formPopup = new PopupWithForm(".popup_edit", (object) => {
   api
-    .sendProfileData(formPopup.getInputValues())
+    .sendProfileData(object)
     .then(() => {
       userInfo.setUserInfo(object), formPopup.popupClose();
     })
@@ -69,7 +69,7 @@ const imagePopup = new PopupWithForm(".popup_add", (imageObject) => {
       console.error(error);
     })
     .finally(() => {
-      formPopup.renderLoading(false);
+      imagePopup.renderLoading(false);
     });
 });
 imagePopup.setEventListeners();
@@ -83,6 +83,9 @@ const avatarPopup = new PopupWithForm(".popup_avatar", (link) => {
     })
     .catch((error) => {
       console.error(error);
+    })
+    .finally(() => {
+      avatarPopup.renderLoading(false);
     });
 });
 avatarPopup.setEventListeners();
@@ -198,7 +201,7 @@ const api = new Api({
 Promise.all([api.getInitialProfileData(), api.getInitialImages()])
   .then(([profileData, imageData]) => {
     userInfo.setInitialProfilenfo(profileData);
-    defaultCardList.renderItems(imageData);
+    defaultCardList.renderItems(imageData.reverse());
   })
   .catch((error) => {
     console.error(error);

@@ -9,7 +9,7 @@ export class PopupWithForm extends Popup {
     this.submitButton = this.popupForm.querySelector(".popup__submit-button");
   }
 
-  getInputValues() {
+  _getInputValues() {
     const inputData = {};
     this.popupInputs.forEach((input) => {
       inputData[input.name] = input.value;
@@ -18,16 +18,16 @@ export class PopupWithForm extends Popup {
   }
 
   _handleFormSubmit() {
-    this.popupForm.addEventListener("submit", (e) => {
-      e.preventDefault();
-      this.renderLoading(true);
-      this.submitFormHandler(this.getInputValues());
-    });
+    this.renderLoading(true);
+    this.submitFormHandler(this._getInputValues());
   }
 
   setEventListeners() {
     super.setEventListeners();
-    this._handleFormSubmit();
+    this.popupForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      this._handleFormSubmit();
+    });
   }
 
   popupClose() {
