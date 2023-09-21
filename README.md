@@ -1,11 +1,14 @@
-# Проект: Место
+# Project: Mesto
 
-### Обзор
+### Review
 
-Третья проектная работа свёрстанная с использованием:
+Third project built using:
 
 - CSS, HTML, JS
-- Адаптивность
-- БЭМ
+- Adaptability
+- BEM methodology
+- Webpack
+- Learned API requests
+- Built form validation
 
-Ссылка на gh page: https://vovchellosssenpai.github.io/mesto/
+Link to gh page: https://vovchellosssenpai.github.io/mesto/
